@@ -1,4 +1,4 @@
-package Java;
+package main.java.com.example.WhiteRectangle;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
