@@ -1,0 +1,119 @@
+Case Diagram for Disk of Lasers Game Application
+
+[Player] -- Plays --> [Game]
+[Player] -- Views --> [High Scores]
+[Player] -- Exits --> [Application]
+[Admin] -- Adds/Removes --> [Game]
+
+Class Diagram for Disk of Lasers Game Application
+
+<<abstract>> Game
+------------------
+- name : String
+- difficulty : int
+------------------
++ playGame() : void
+
+ConnectFourGame
+------------------
++ playGame() : void
+
+MemoryGame
+------------------
++ playGame() : void
+
+TicTacToeGame
+------------------
++ playGame() : void
+
+RockPaperScissorsGame
+------------------
++ playGame() : void
+
+Le Dice Game
+------------------
++ playGame() : void
+
+Board
+------------------
+- rows : int
+- columns : int
+- board : int[][]
+------------------
++ getPiece(row: int, column: int) : int
++ setPiece(row: int, column: int, piece: int) : void
++ isFull() : boolean
++ isWinner() : boolean
+
+Player
+------------------
+- name : String
+- score : int
+------------------
++ makeMove(row: int, column: int) : void
++ viewHighScores() : void
+
+Admin
+------------------
+- username : String
+- password : String
+------------------
++ addGame(game: Game) : void
++ removeGame(game: Game) : void
+
+Sequence Diagram for Player Playing Connect Four
+
+[Player] -> [ConnectFourGame]: playGame()
+[ConnectFourGame] -> [Board]: getPiece(row, column)
+[Board] -> [ConnectFourGame]: piece
+[ConnectFourGame] -> [Board]: setPiece(row, column, piece)
+[Board] -> [ConnectFourGame]: void
+[ConnectFourGame] -> [Board]: isFull()
+[Board] -> [ConnectFourGame]: boolean
+[ConnectFourGame] -> [Board]: isWinner()
+[Board] -> [ConnectFourGame]: boolean
+[ConnectFourGame] -> [Player]: void
+
+Sequence Diagram for Player Playing Tic-Tac-Toe
+Title: Tic-Tac-Toe Game Sequence Diagram
+
+participant Player
+participant Game Engine
+
+Player->Game Engine: Make move by selecting a cell on the board
+Game Engine->Game Engine: Check for win condition or draw
+alt Game over?
+    Game Engine->Player: Announce winner or draw
+else Not over
+    Game Engine->Game Engine: Switch to next player
+    Game Engine->Player: Next player's turn
+    Player->Game Engine: Make move by selecting a cell on the board
+    Game Engine->Game Engine: Check for win condition or draw
+    alt Game over?
+        Game Engine->Player: Announce winner or draw
+    else Not over
+        Game Engine->Game Engine: Switch to next player
+        Game Engine->Player: Next player's turn
+    end
+end
+Sequence Diagram for Player Playing Rock-Paper-Scissors
+Title: Rock-Paper-Scissors Game Sequence Diagram
+
+participant Player 1
+participant Player 2
+participant Game Engine
+
+Player 1->Game Engine: Select move (rock, paper, or scissors)
+Player 2->Game Engine: Select move (rock, paper, or scissors)
+Game Engine->Game Engine: Determine winner based on rules
+Game Engine->Player 1: Update scores
+Game Engine->Player 2: Update scores
+alt Game over?
+    Game Engine->Player 1: Announce winner
+else Not over
+    Player 1->Game Engine: Select move (rock, paper, or scissors)
+    Player 2->Game Engine: Select move (rock, paper, or scissors)
+    Game Engine->Game Engine: Determine winner based on rules
+    Game Engine->Player 1: Update scores
+    Game Engine->Player 2: Update scores
+end
